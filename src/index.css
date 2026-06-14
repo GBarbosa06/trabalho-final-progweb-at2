@@ -9,7 +9,7 @@ body {
   font-family: system-ui, sans-serif;
   line-height: 1.5;
   color: #1a1a1a;
-  background: #f5f5f5;
+  background: #f0ede8;
 }
 
 #root {
@@ -24,6 +24,8 @@ body {
   color: #555;
 }
 
+/* ── Auth pages ── */
+
 .auth-page {
   display: grid;
   place-items: center;
@@ -34,62 +36,95 @@ body {
 .auth-form {
   width: 100%;
   max-width: 400px;
-  padding: 2rem;
   background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.07), 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
-.auth-form h1 {
-  margin: 0 0 0.5rem;
-  font-size: 1.75rem;
+.auth-banner {
+  background: #3d6b4f;
+  padding: 1.75rem 2rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
-.auth-subtitle {
-  margin: 0 0 1.5rem;
-  color: #666;
+.auth-banner-icon {
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.auth-banner h1 {
+  margin: 0;
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #fff;
+  letter-spacing: -0.01em;
+}
+
+.auth-banner p {
+  margin: 2px 0 0;
+  font-size: 0.82rem;
+  color: #a8c9b4;
+}
+
+.auth-body {
+  padding: 1.75rem 2rem 2rem;
+}
+
+.auth-divider {
+  height: 1.5px;
+  background: #f0ede8;
+  margin: 0 0 1.25rem;
 }
 
 .auth-form label {
   display: block;
-  margin-bottom: 0.35rem;
-  font-size: 0.9rem;
-  font-weight: 500;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
 }
 
 .auth-form input {
   width: 100%;
-  margin-bottom: 1rem;
-  padding: 0.65rem 0.75rem;
-  border: 1px solid #ccc;
-  border-radius: 6px;
+  margin-bottom: 1.1rem;
+  padding: 0.65rem 0.85rem;
+  border: 1.5px solid #e0ddd8;
+  border-radius: 8px;
   font: inherit;
+  font-size: 0.95rem;
+  background: #faf9f7;
+  color: #1a1a1a;
 }
 
 .auth-form input:focus {
-  outline: 2px solid #2563eb;
-  outline-offset: 1px;
-  border-color: #2563eb;
+  outline: none;
+  border-color: #3d6b4f;
 }
 
-.auth-form button {
+.auth-form button[type="submit"] {
   width: 100%;
-  margin-top: 0.5rem;
-  padding: 0.75rem;
+  margin-top: 0.25rem;
+  padding: 0.8rem;
   border: none;
-  border-radius: 6px;
-  background: #2563eb;
+  border-radius: 8px;
+  background: #3d6b4f;
   color: #fff;
   font: inherit;
+  font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
 }
 
-.auth-form button:hover:not(:disabled) {
-  background: #1d4ed8;
+.auth-form button[type="submit"]:hover:not(:disabled) {
+  background: #335c43;
 }
 
-.auth-form button:disabled {
+.auth-form button[type="submit"]:disabled {
   opacity: 0.7;
   cursor: not-allowed;
 }
@@ -97,28 +132,30 @@ body {
 .auth-error {
   margin: 0 0 1rem;
   padding: 0.75rem;
-  border-radius: 6px;
+  border-radius: 8px;
   background: #fef2f2;
   color: #b91c1c;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
 }
 
 .auth-footer {
-  margin: 1.5rem 0 0;
+  margin: 1.25rem 0 0;
   text-align: center;
-  font-size: 0.9rem;
-  color: #666;
+  font-size: 0.85rem;
+  color: #888;
 }
 
 .auth-footer a {
-  color: #2563eb;
-  font-weight: 500;
+  color: #3d6b4f;
+  font-weight: 600;
   text-decoration: none;
 }
 
 .auth-footer a:hover {
   text-decoration: underline;
 }
+
+/* ── Home ── */
 
 .home-page {
   display: flex;
@@ -128,6 +165,16 @@ body {
   gap: 1rem;
   min-height: 100vh;
   padding: 1.5rem;
+}
+
+.home-nav a {
+  color: #3d6b4f;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.home-nav a:hover {
+  text-decoration: underline;
 }
 
 .home-page button {
@@ -141,4 +188,161 @@ body {
 
 .home-page button:hover {
   background: #f0f0f0;
+}
+
+/* ── Pets ── */
+
+.pets-page {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+.pets-page h1 {
+  margin: 0 0 2rem;
+}
+
+.pets-form-section,
+.pets-list-section {
+  margin-bottom: 2.5rem;
+}
+
+.pets-form-section h2,
+.pets-list-section h2 {
+  margin: 0 0 1rem;
+  font-size: 1.1rem;
+}
+
+.pets-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 480px;
+}
+
+.pets-form label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #555;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+}
+
+.pets-form input {
+  margin-bottom: 1rem;
+  padding: 0.65rem 0.85rem;
+  border: 1.5px solid #e0ddd8;
+  border-radius: 8px;
+  font: inherit;
+  background: #faf9f7;
+}
+
+.pets-form input:focus {
+  outline: none;
+  border-color: #3d6b4f;
+}
+
+.pets-form-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.pets-form-actions button[type="submit"] {
+  padding: 0.7rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  background: #3d6b4f;
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.pets-form-actions button[type="submit"]:hover:not(:disabled) {
+  background: #335c43;
+}
+
+.pets-form-actions button[type="submit"]:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.pets-form-actions button[type="button"] {
+  padding: 0.7rem 1.25rem;
+  border: 1.5px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+  font: inherit;
+  cursor: pointer;
+}
+
+.pets-form-actions button[type="button"]:hover {
+  background: #f5f5f5;
+}
+
+.pets-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.pets-table th {
+  text-align: left;
+  padding: 0.6rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #555;
+  border-bottom: 2px solid #e0ddd8;
+}
+
+.pets-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid #f0ede8;
+}
+
+.pets-table tr:last-child td {
+  border-bottom: none;
+}
+
+.pets-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.pets-actions button {
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font: inherit;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.pets-actions button:first-child {
+  border: 1.5px solid #3d6b4f;
+  background: #fff;
+  color: #3d6b4f;
+  font-weight: 600;
+}
+
+.pets-actions button:first-child:hover {
+  background: #f0f7f3;
+}
+
+.pets-actions button:last-child {
+  border: 1.5px solid #e0ddd8;
+  background: #fff;
+  color: #b91c1c;
+}
+
+.pets-actions button:last-child:hover {
+  background: #fef2f2;
+  border-color: #b91c1c;
+}
+
+.pets-empty {
+  color: #888;
+  font-size: 0.95rem;
 }

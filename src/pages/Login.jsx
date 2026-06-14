@@ -27,38 +27,49 @@ export default function Login() {
   return (
     <div className="auth-page">
       <form className="auth-form" onSubmit={handleSubmit}>
-        <h1>Entrar</h1>
-        <p className="auth-subtitle">Acesse sua conta para continuar.</p>
+        <div className="auth-banner">
+          <span className="auth-banner-icon">🐾</span>
+          <div>
+            <h1>PetManager</h1>
+            <p>Cuidando de quem você ama</p>
+          </div>
+        </div>
 
-        {error && <p className="auth-error">{error}</p>}
+        <div className="auth-body">
+          <div className="auth-divider" />
 
-        <label htmlFor="email">E-mail</label>
-        <input
-          id="email"
-          type="email"
-          autoComplete="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          required
-        />
+          {error && <p className="auth-error">{error}</p>}
 
-        <label htmlFor="password">Senha</label>
-        <input
-          id="password"
-          type="password"
-          autoComplete="current-password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          required
-        />
+          <label htmlFor="email">E-mail</label>
+          <input
+            id="email"
+            type="email"
+            autoComplete="email"
+            placeholder="seu@email.com"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            required
+          />
 
-        <button type="submit" disabled={submitting}>
-          {submitting ? "Entrando..." : "Entrar"}
-        </button>
+          <label htmlFor="password">Senha</label>
+          <input
+            id="password"
+            type="password"
+            autoComplete="current-password"
+            placeholder="••••••••"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            required
+          />
 
-        <p className="auth-footer">
-          Não tem uma conta? <Link to="/register">Cadastre-se</Link>
-        </p>
+          <button type="submit" disabled={submitting}>
+            {submitting ? "Entrando..." : "Entrar"}
+          </button>
+
+          <p className="auth-footer">
+            Não tem uma conta? <Link to="/register">Cadastre-se</Link>
+          </p>
+        </div>
       </form>
     </div>
   );

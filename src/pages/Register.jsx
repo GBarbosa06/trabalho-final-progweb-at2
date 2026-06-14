@@ -38,50 +38,62 @@ export default function Register() {
   return (
     <div className="auth-page">
       <form className="auth-form" onSubmit={handleSubmit}>
-        <h1>Criar conta</h1>
-        <p className="auth-subtitle">Preencha os dados para se cadastrar.</p>
+        <div className="auth-banner">
+          <span className="auth-banner-icon">🐾</span>
+          <div>
+            <h1>PetManager</h1>
+            <p>Crie sua conta gratuitamente</p>
+          </div>
+        </div>
 
-        {displayError && <p className="auth-error">{displayError}</p>}
+        <div className="auth-body">
+          <div className="auth-divider" />
 
-        <label htmlFor="email">E-mail</label>
-        <input
-          id="email"
-          type="email"
-          autoComplete="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          required
-        />
+          {displayError && <p className="auth-error">{displayError}</p>}
 
-        <label htmlFor="password">Senha</label>
-        <input
-          id="password"
-          type="password"
-          autoComplete="new-password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          minLength={6}
-          required
-        />
+          <label htmlFor="email">E-mail</label>
+          <input
+            id="email"
+            type="email"
+            autoComplete="email"
+            placeholder="seu@email.com"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            required
+          />
 
-        <label htmlFor="confirmPassword">Confirmar senha</label>
-        <input
-          id="confirmPassword"
-          type="password"
-          autoComplete="new-password"
-          value={confirmPassword}
-          onChange={(event) => setConfirmPassword(event.target.value)}
-          minLength={6}
-          required
-        />
+          <label htmlFor="password">Senha</label>
+          <input
+            id="password"
+            type="password"
+            autoComplete="new-password"
+            placeholder="mínimo 6 caracteres"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            minLength={6}
+            required
+          />
 
-        <button type="submit" disabled={submitting}>
-          {submitting ? "Cadastrando..." : "Cadastrar"}
-        </button>
+          <label htmlFor="confirmPassword">Confirmar senha</label>
+          <input
+            id="confirmPassword"
+            type="password"
+            autoComplete="new-password"
+            placeholder="repita a senha"
+            value={confirmPassword}
+            onChange={(event) => setConfirmPassword(event.target.value)}
+            minLength={6}
+            required
+          />
 
-        <p className="auth-footer">
-          Já tem uma conta? <Link to="/login">Entrar</Link>
-        </p>
+          <button type="submit" disabled={submitting}>
+            {submitting ? "Cadastrando..." : "Cadastrar"}
+          </button>
+
+          <p className="auth-footer">
+            Já tem uma conta? <Link to="/login">Entrar</Link>
+          </p>
+        </div>
       </form>
     </div>
   );
