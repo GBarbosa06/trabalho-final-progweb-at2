@@ -4,6 +4,9 @@ import Home from "./pages/Home.jsx";
 import Login from "./pages/Login.jsx";
 import Register from "./pages/Register.jsx";
 import Pets from "./pages/Pets.jsx";
+import Tutores from "./pages/Tutores.jsx";
+import Adocoes from "./pages/Adocoes.jsx";
+import RelatorioAdocoes from "./pages/RelatorioAdocoes.jsx";
 
 function App() {
   return (
@@ -12,6 +15,9 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route index element={<Home />} />
           <Route path="pets" element={<Pets />} />
+          <Route path="tutores" element={<Tutores />} />
+          <Route path="adocoes" element={<Adocoes />} />
+          <Route path="relatorio" element={<RelatorioAdocoes />} />
         </Route>
 
         <Route element={<PublicRoute />}>
