@@ -1,6 +1,7 @@
 import { useAdocoes } from "../hooks/useAdocoes.js";
 import { usePets } from "../hooks/usePets.js";
 import { useTutores } from "../hooks/useTutores.js";
+import BackButton from "../components/BackButton.jsx";
 
 export default function RelatorioAdocoes() {
   const { adocoes, loading: loadingAdocoes } = useAdocoes();
@@ -31,6 +32,7 @@ export default function RelatorioAdocoes() {
 
   return (
     <main className="pets-page">
+      <BackButton />
       <h1>Relatório de Adoções</h1>
       <p className="relatorio-descricao">
         Visão consolidada de todas as adoções, relacionando cada pet ao seu tutor adotante.

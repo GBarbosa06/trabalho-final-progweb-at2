@@ -3,6 +3,7 @@ import { useAdocoes } from "../hooks/useAdocoes.js";
 import { usePets } from "../hooks/usePets.js";
 import { useTutores } from "../hooks/useTutores.js";
 import { AdocaoRow } from "../components/AdocaoRow.jsx";
+import BackButton from "../components/BackButton.jsx";
 
 const EMPTY_FORM = { petId: "", tutorId: "", dataAdocao: "" };
 
@@ -83,6 +84,7 @@ export default function Adocoes() {
 
   return (
     <main className="pets-page">
+      <BackButton />
       <h1>Adoções</h1>
 
       <section className="pets-form-section">

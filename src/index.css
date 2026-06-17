@@ -556,3 +556,18 @@ body {
     padding: 0.65rem 0.6rem;
   }
 }
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #555;
+  text-decoration: none;
+}
+
+.back-button:hover {
+  color: #3d6b4f;
+}

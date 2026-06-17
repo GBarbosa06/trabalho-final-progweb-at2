@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { usePets } from "../hooks/usePets.js";
+import BackButton from "../components/BackButton.jsx";
 
 const EMPTY_FORM = { nome: "", especie: "", raca: "", idade: "" };
 
@@ -75,6 +76,7 @@ export default function Pets() {
 
   return (
     <main className="pets-page">
+      <BackButton />
       <h1>Pets</h1>
 
       {/* Formulário */}

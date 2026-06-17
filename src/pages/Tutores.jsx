@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useTutores } from "../hooks/useTutores.js";
 import { TutorRow } from "../components/TutorRow.jsx";
+import BackButton from "../components/BackButton.jsx";
 
 const EMPTY_FORM = { nome: "", telefone: "", email: "" };
 
@@ -73,6 +74,7 @@ export default function Tutores() {
 
   return (
     <main className="pets-page">
+      <BackButton />
       <h1>Tutores</h1>
 
       <section className="pets-form-section">
