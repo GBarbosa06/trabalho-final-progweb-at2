@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { usePets } from "../hooks/usePets.js";
+import { PetRow } from "../components/PetRow.jsx";
 import BackButton from "../components/BackButton.jsx";
 
 const EMPTY_FORM = { nome: "", especie: "", raca: "", idade: "" };
@@ -172,20 +173,12 @@ export default function Pets() {
             </thead>
             <tbody>
               {pets.map((pet) => (
-                <tr key={pet.id}>
-                  <td>{pet.nome}</td>
-                  <td>{pet.especie}</td>
-                  <td>{pet.raca}</td>
-                  <td>{pet.idade} {pet.idade === 1 ? "ano" : "anos"}</td>
-                  <td className="pets-actions">
-                    <button type="button" onClick={() => handleEdit(pet)}>
-                      Editar
-                    </button>
-                    <button type="button" onClick={() => handleDelete(pet.id)}>
-                      Excluir
-                    </button>
-                  </td>
-                </tr>
+                <PetRow
+                  key={pet.id}
+                  pet={pet}
+                  onEdit={handleEdit}
+                  onDelete={handleDelete}
+                />
               ))}
             </tbody>
           </table>
