@@ -75,10 +75,20 @@ export default function Tutores() {
   return (
     <main className="pets-page">
       <BackButton />
-      <h1>Tutores</h1>
 
+      <div className="page-header">
+        <h1>👤 Tutores</h1>
+        <p>Gerencie os adotantes cadastrados no sistema.</p>
+      </div>
+
+      {/* ── Formulário ── */}
       <section className="pets-form-section">
-        <h2>{editingId ? "Editar Tutor" : "Cadastrar Tutor"}</h2>
+        <div className="section-header">
+          <div className="section-header-icon">
+            {editingId ? "✏️" : "➕"}
+          </div>
+          <h2>{editingId ? "Editar Tutor" : "Cadastrar Tutor"}</h2>
+        </div>
 
         {displayError && <p className="auth-error">{displayError}</p>}
 
@@ -124,7 +134,7 @@ export default function Tutores() {
                   : "Cadastrando..."
                 : editingId
                 ? "Salvar alterações"
-                : "Cadastrar"}
+                : "Cadastrar tutor"}
             </button>
 
             {editingId && (
@@ -136,13 +146,21 @@ export default function Tutores() {
         </form>
       </section>
 
+      {/* ── Listagem ── */}
       <section className="pets-list-section">
-        <h2>Tutores cadastrados</h2>
+        <div className="section-header">
+          <div className="section-header-icon">📋</div>
+          <h2>Tutores cadastrados</h2>
+        </div>
 
-        {loading && <p className="loading">Carregando...</p>}
+        {loading && (
+          <p className="table-loading">⏳ Carregando tutores...</p>
+        )}
 
         {!loading && tutores.length === 0 && (
-          <p className="pets-empty">Nenhum tutor cadastrado ainda.</p>
+          <p className="pets-empty">
+            Nenhum tutor cadastrado ainda. Adicione o primeiro acima! 👤
+          </p>
         )}
 
         {!loading && tutores.length > 0 && (

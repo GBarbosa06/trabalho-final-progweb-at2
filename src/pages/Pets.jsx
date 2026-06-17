@@ -20,7 +20,12 @@ export default function Pets() {
 
   function handleEdit(pet) {
     setEditingId(pet.id);
-    setForm({ nome: pet.nome, especie: pet.especie, raca: pet.raca, idade: pet.idade });
+    setForm({
+      nome: pet.nome,
+      especie: pet.especie,
+      raca: pet.raca,
+      idade: pet.idade,
+    });
     setFormError(null);
     clearError();
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -77,11 +82,20 @@ export default function Pets() {
   return (
     <main className="pets-page">
       <BackButton />
-      <h1>Pets</h1>
 
-      {/* Formulário */}
+      <div className="page-header">
+        <h1>🐶 Pets</h1>
+        <p>Cadastre e gerencie os animais disponíveis para adoção.</p>
+      </div>
+
+      {/* ── Formulário ── */}
       <section className="pets-form-section">
-        <h2>{editingId ? "Editar Pet" : "Cadastrar Pet"}</h2>
+        <div className="section-header">
+          <div className="section-header-icon">
+            {editingId ? "✏️" : "➕"}
+          </div>
+          <h2>{editingId ? "Editar Pet" : "Cadastrar Pet"}</h2>
+        </div>
 
         {displayError && <p className="auth-error">{displayError}</p>}
 
@@ -91,6 +105,7 @@ export default function Pets() {
             id="nome"
             name="nome"
             type="text"
+            placeholder="Ex: Rex, Bolinha, Mia..."
             value={form.nome}
             onChange={handleChange}
             required
@@ -112,7 +127,7 @@ export default function Pets() {
             id="raca"
             name="raca"
             type="text"
-            placeholder="Ex: Labrador, Siamês..."
+            placeholder="Ex: Labrador, Siamês, SRD..."
             value={form.raca}
             onChange={handleChange}
             required
@@ -124,6 +139,7 @@ export default function Pets() {
             name="idade"
             type="number"
             min="0"
+            placeholder="0"
             value={form.idade}
             onChange={handleChange}
             required
@@ -137,7 +153,7 @@ export default function Pets() {
                   : "Cadastrando..."
                 : editingId
                 ? "Salvar alterações"
-                : "Cadastrar"}
+                : "Cadastrar pet"}
             </button>
 
             {editingId && (
@@ -149,14 +165,21 @@ export default function Pets() {
         </form>
       </section>
 
-      {/* Listagem */}
+      {/* ── Listagem ── */}
       <section className="pets-list-section">
-        <h2>Pets cadastrados</h2>
+        <div className="section-header">
+          <div className="section-header-icon">📋</div>
+          <h2>Pets cadastrados</h2>
+        </div>
 
-        {loading && <p className="loading">Carregando...</p>}
+        {loading && (
+          <p className="table-loading">⏳ Carregando pets...</p>
+        )}
 
         {!loading && pets.length === 0 && (
-          <p className="pets-empty">Nenhum pet cadastrado ainda.</p>
+          <p className="pets-empty">
+            Nenhum pet cadastrado ainda. Adicione o primeiro acima! 🐾
+          </p>
         )}
 
         {!loading && pets.length > 0 && (
@@ -173,15 +196,24 @@ export default function Pets() {
             <tbody>
               {pets.map((pet) => (
                 <tr key={pet.id}>
-                  <td>{pet.nome}</td>
-                  <td>{pet.especie}</td>
+                  <td>
+                    <strong>{pet.nome}</strong>
+                  </td>
+                  <td>
+                    <span className="badge-especie">{pet.especie}</span>
+                  </td>
                   <td>{pet.raca}</td>
-                  <td>{pet.idade} {pet.idade === 1 ? "ano" : "anos"}</td>
+                  <td>
+                    {pet.idade} {pet.idade === 1 ? "ano" : "anos"}
+                  </td>
                   <td className="pets-actions">
                     <button type="button" onClick={() => handleEdit(pet)}>
                       Editar
                     </button>
-                    <button type="button" onClick={() => handleDelete(pet.id)}>
+                    <button
+                      type="button"
+                      onClick={() => handleDelete(pet.id)}
+                    >
                       Excluir
                     </button>
                   </td>

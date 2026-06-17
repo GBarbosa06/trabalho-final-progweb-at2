@@ -30,8 +30,8 @@ export default function Login() {
         <div className="auth-banner">
           <span className="auth-banner-icon">🐾</span>
           <div>
-            <h1>PetManager</h1>
-            <p>Cuidando de quem você ama</p>
+            <h1>Cafofo dos Peludos</h1>
+            <p>Sistema de gestão do abrigo</p>
           </div>
         </div>
 
@@ -47,7 +47,7 @@ export default function Login() {
             autoComplete="email"
             placeholder="seu@email.com"
             value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
 
@@ -58,7 +58,7 @@ export default function Login() {
             autoComplete="current-password"
             placeholder="••••••••"
             value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             required
           />
 

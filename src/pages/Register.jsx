@@ -41,7 +41,7 @@ export default function Register() {
         <div className="auth-banner">
           <span className="auth-banner-icon">🐾</span>
           <div>
-            <h1>PetManager</h1>
+            <h1>Cafofo dos Peludos</h1>
             <p>Crie sua conta gratuitamente</p>
           </div>
         </div>
@@ -58,7 +58,7 @@ export default function Register() {
             autoComplete="email"
             placeholder="seu@email.com"
             value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
 
@@ -69,7 +69,7 @@ export default function Register() {
             autoComplete="new-password"
             placeholder="mínimo 6 caracteres"
             value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            onChange={(e) => setPassword(e.target.value)}
             minLength={6}
             required
           />
@@ -81,13 +81,13 @@ export default function Register() {
             autoComplete="new-password"
             placeholder="repita a senha"
             value={confirmPassword}
-            onChange={(event) => setConfirmPassword(event.target.value)}
+            onChange={(e) => setConfirmPassword(e.target.value)}
             minLength={6}
             required
           />
 
           <button type="submit" disabled={submitting}>
-            {submitting ? "Cadastrando..." : "Cadastrar"}
+            {submitting ? "Cadastrando..." : "Criar conta"}
           </button>
 
           <p className="auth-footer">

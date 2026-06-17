@@ -8,8 +8,15 @@ import BackButton from "../components/BackButton.jsx";
 const EMPTY_FORM = { petId: "", tutorId: "", dataAdocao: "" };
 
 export default function Adocoes() {
-  const { adocoes, loading, error, addAdocao, updateAdocao, deleteAdocao, clearError } =
-    useAdocoes();
+  const {
+    adocoes,
+    loading,
+    error,
+    addAdocao,
+    updateAdocao,
+    deleteAdocao,
+    clearError,
+  } = useAdocoes();
   const { pets, loading: loadingPets } = usePets();
   const { tutores, loading: loadingTutores } = useTutores();
 
@@ -75,16 +82,15 @@ export default function Adocoes() {
   }
 
   async function handleDelete(id) {
-    if (!window.confirm("Deseja realmente excluir este registro de adoção?")) return;
+    if (!window.confirm("Deseja realmente excluir este registro de adoção?"))
+      return;
     await deleteAdocao(id);
   }
 
+  // Pets disponíveis: exclui os já adotados, mas mantém o pet do registro em edição
   const petsDisponiveis = pets.filter((pet) => {
-    if (editingId && form.petId === pet.id) {
-      return true;
-    }
-    const jaAdotado = adocoes.some((adocao) => adocao.petId === pet.id);
-    return !jaAdotado;
+    if (editingId && form.petId === pet.id) return true;
+    return !adocoes.some((adocao) => adocao.petId === pet.id);
   });
 
   const displayError = formError ?? error;
@@ -93,10 +99,20 @@ export default function Adocoes() {
   return (
     <main className="pets-page">
       <BackButton />
-      <h1>Adoções</h1>
 
+      <div className="page-header">
+        <h1>💚 Adoções</h1>
+        <p>Registre e gerencie as adoções realizadas pelo abrigo.</p>
+      </div>
+
+      {/* ── Formulário ── */}
       <section className="pets-form-section">
-        <h2>{editingId ? "Editar Adoção" : "Registrar Adoção"}</h2>
+        <div className="section-header">
+          <div className="section-header-icon">
+            {editingId ? "✏️" : "➕"}
+          </div>
+          <h2>{editingId ? "Editar Adoção" : "Registrar Adoção"}</h2>
+        </div>
 
         {displayError && <p className="auth-error">{displayError}</p>}
 
@@ -111,11 +127,15 @@ export default function Adocoes() {
             required
           >
             <option value="">Selecione um pet...</option>
-            {petsDisponiveis.map((pet) => (
-              <option key={pet.id} value={pet.id}>
-                {pet.nome} — {pet.especie}
-              </option>
-            ))}
+            {petsDisponiveis.length === 0 && !editingId ? (
+              <option disabled>Nenhum pet disponível para adoção</option>
+            ) : (
+              petsDisponiveis.map((pet) => (
+                <option key={pet.id} value={pet.id}>
+                  {pet.nome} — {pet.especie}
+                </option>
+              ))
+            )}
           </select>
 
           <label htmlFor="tutorId">Tutor (Adotante)</label>
@@ -153,7 +173,7 @@ export default function Adocoes() {
                   : "Registrando..."
                 : editingId
                 ? "Salvar alterações"
-                : "Registrar"}
+                : "Registrar adoção"}
             </button>
 
             {editingId && (
@@ -165,13 +185,21 @@ export default function Adocoes() {
         </form>
       </section>
 
+      {/* ── Listagem ── */}
       <section className="pets-list-section">
-        <h2>Adoções registradas</h2>
+        <div className="section-header">
+          <div className="section-header-icon">📋</div>
+          <h2>Adoções registradas</h2>
+        </div>
 
-        {isLoading && <p className="loading">Carregando...</p>}
+        {isLoading && (
+          <p className="table-loading">⏳ Carregando adoções...</p>
+        )}
 
         {!isLoading && adocoes.length === 0 && (
-          <p className="pets-empty">Nenhuma adoção registrada ainda.</p>
+          <p className="pets-empty">
+            Nenhuma adoção registrada ainda. Registre a primeira acima! 💚
+          </p>
         )}
 
         {!isLoading && adocoes.length > 0 && (
