@@ -79,6 +79,14 @@ export default function Adocoes() {
     await deleteAdocao(id);
   }
 
+  const petsDisponiveis = pets.filter((pet) => {
+    if (editingId && form.petId === pet.id) {
+      return true;
+    }
+    const jaAdotado = adocoes.some((adocao) => adocao.petId === pet.id);
+    return !jaAdotado;
+  });
+
   const displayError = formError ?? error;
   const isLoading = loading || loadingPets || loadingTutores;
 
@@ -103,7 +111,7 @@ export default function Adocoes() {
             required
           >
             <option value="">Selecione um pet...</option>
-            {pets.map((pet) => (
+            {petsDisponiveis.map((pet) => (
               <option key={pet.id} value={pet.id}>
                 {pet.nome} — {pet.especie}
               </option>
