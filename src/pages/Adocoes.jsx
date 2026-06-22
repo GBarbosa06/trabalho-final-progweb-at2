@@ -3,20 +3,13 @@ import { useAdocoes } from "../hooks/useAdocoes.js";
 import { usePets } from "../hooks/usePets.js";
 import { useTutores } from "../hooks/useTutores.js";
 import { AdocaoRow } from "../components/AdocaoRow.jsx";
-import BackButton from "../components/BackButton.jsx";
+import Navbar from "../components/Navbar.jsx";
 
 const EMPTY_FORM = { petId: "", tutorId: "", dataAdocao: "" };
 
 export default function Adocoes() {
-  const {
-    adocoes,
-    loading,
-    error,
-    addAdocao,
-    updateAdocao,
-    deleteAdocao,
-    clearError,
-  } = useAdocoes();
+  const { adocoes, loading, error, addAdocao, updateAdocao, deleteAdocao, clearError } =
+    useAdocoes();
   const { pets, loading: loadingPets } = usePets();
   const { tutores, loading: loadingTutores } = useTutores();
 
@@ -82,37 +75,20 @@ export default function Adocoes() {
   }
 
   async function handleDelete(id) {
-    if (!window.confirm("Deseja realmente excluir este registro de adoção?"))
-      return;
+    if (!window.confirm("Deseja realmente excluir este registro de adoção?")) return;
     await deleteAdocao(id);
   }
-
-  // Pets disponíveis: exclui os já adotados, mas mantém o pet do registro em edição
-  const petsDisponiveis = pets.filter((pet) => {
-    if (editingId && form.petId === pet.id) return true;
-    return !adocoes.some((adocao) => adocao.petId === pet.id);
-  });
 
   const displayError = formError ?? error;
   const isLoading = loading || loadingPets || loadingTutores;
 
   return (
     <main className="pets-page">
-      <BackButton />
+      <Navbar />
+      <h1>Adoções</h1>
 
-      <div className="page-header">
-        <h1>💚 Adoções</h1>
-        <p>Registre e gerencie as adoções realizadas pelo abrigo.</p>
-      </div>
-
-      {/* ── Formulário ── */}
       <section className="pets-form-section">
-        <div className="section-header">
-          <div className="section-header-icon">
-            {editingId ? "✏️" : "➕"}
-          </div>
-          <h2>{editingId ? "Editar Adoção" : "Registrar Adoção"}</h2>
-        </div>
+        <h2>{editingId ? "Editar Adoção" : "Registrar Adoção"}</h2>
 
         {displayError && <p className="auth-error">{displayError}</p>}
 
@@ -127,15 +103,11 @@ export default function Adocoes() {
             required
           >
             <option value="">Selecione um pet...</option>
-            {petsDisponiveis.length === 0 && !editingId ? (
-              <option disabled>Nenhum pet disponível para adoção</option>
-            ) : (
-              petsDisponiveis.map((pet) => (
-                <option key={pet.id} value={pet.id}>
-                  {pet.nome} — {pet.especie}
-                </option>
-              ))
-            )}
+            {pets.map((pet) => (
+              <option key={pet.id} value={pet.id}>
+                {pet.nome} — {pet.especie}
+              </option>
+            ))}
           </select>
 
           <label htmlFor="tutorId">Tutor (Adotante)</label>
@@ -173,7 +145,7 @@ export default function Adocoes() {
                   : "Registrando..."
                 : editingId
                 ? "Salvar alterações"
-                : "Registrar adoção"}
+                : "Registrar"}
             </button>
 
             {editingId && (
@@ -185,21 +157,13 @@ export default function Adocoes() {
         </form>
       </section>
 
-      {/* ── Listagem ── */}
       <section className="pets-list-section">
-        <div className="section-header">
-          <div className="section-header-icon">📋</div>
-          <h2>Adoções registradas</h2>
-        </div>
+        <h2>Adoções registradas</h2>
 
-        {isLoading && (
-          <p className="table-loading">⏳ Carregando adoções...</p>
-        )}
+        {isLoading && <p className="loading">Carregando...</p>}
 
         {!isLoading && adocoes.length === 0 && (
-          <p className="pets-empty">
-            Nenhuma adoção registrada ainda. Registre a primeira acima! 💚
-          </p>
+          <p className="pets-empty">Nenhuma adoção registrada ainda.</p>
         )}
 
         {!isLoading && adocoes.length > 0 && (

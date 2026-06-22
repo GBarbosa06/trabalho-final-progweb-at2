@@ -775,3 +775,66 @@ body {
     padding: 0 1rem;
   }
 }
+
+/* ── Navbar (páginas internas) ── */
+.app-navbar {
+  background: var(--white);
+  border-bottom: 2px solid var(--orange-border);
+  padding: 0 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+  box-shadow: 0 2px 12px rgba(255, 183, 77, 0.12);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  margin-bottom: 1.5rem;
+}
+
+.app-navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.app-navbar-brand span:first-child {
+  font-size: 1.6rem;
+  filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.12));
+}
+
+.app-navbar-brand strong {
+  font-family: 'Baloo 2', cursive;
+  font-size: 1.15rem;
+  font-weight: 800;
+  color: var(--orange-dark);
+  letter-spacing: -0.02em;
+}
+
+.app-navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.app-navbar-link {
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.app-navbar-link:hover {
+  background: var(--orange-light);
+  color: var(--orange-dark);
+}
+
+.app-navbar-link-active {
+  background: var(--orange-light);
+  color: var(--orange-dark);
+}

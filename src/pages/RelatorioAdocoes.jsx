@@ -1,7 +1,7 @@
 import { useAdocoes } from "../hooks/useAdocoes.js";
 import { usePets } from "../hooks/usePets.js";
 import { useTutores } from "../hooks/useTutores.js";
-import BackButton from "../components/BackButton.jsx";
+import Navbar from "../components/Navbar.jsx";
 
 export default function RelatorioAdocoes() {
   const { adocoes, loading: loadingAdocoes } = useAdocoes();
@@ -10,7 +10,7 @@ export default function RelatorioAdocoes() {
 
   const isLoading = loadingAdocoes || loadingPets || loadingTutores;
 
-  // JOIN simulado: para cada adoção, encontra o pet e o tutor pelo id
+  // JOIN simulado: para cada adoção, encontramos o pet e o tutor pelo id
   const relatorio = adocoes.map((adocao) => {
     const pet = pets.find((p) => p.id === adocao.petId);
     const tutor = tutores.find((t) => t.id === adocao.tutorId);
@@ -32,36 +32,22 @@ export default function RelatorioAdocoes() {
 
   return (
     <main className="pets-page">
-      <BackButton />
+      <Navbar />
+      <h1>Relatório de Adoções</h1>
+      <p className="relatorio-descricao">
+        Visão consolidada de todas as adoções, relacionando cada pet ao seu tutor adotante.
+      </p>
 
-      <div className="page-header">
-        <h1>📊 Relatório de Adoções</h1>
-        <p>
-          Visão consolidada de todas as adoções, relacionando cada pet ao seu
-          tutor adotante.
-        </p>
-      </div>
-
-      {isLoading && (
-        <p className="table-loading">⏳ Carregando relatório...</p>
-      )}
+      {isLoading && <p className="loading">Carregando relatório...</p>}
 
       {!isLoading && relatorio.length === 0 && (
-        <p className="pets-empty">
-          Nenhuma adoção registrada para exibir no relatório. 📋
-        </p>
+        <p className="pets-empty">Nenhuma adoção registrada para exibir no relatório.</p>
       )}
 
       {!isLoading && relatorio.length > 0 && (
-        <section className="pets-list-section">
-          <div className="section-header">
-            <div className="section-header-icon">📊</div>
-            <h2>Adoções realizadas</h2>
-          </div>
-
+        <>
           <p className="relatorio-total">
-            Total de adoções registradas:{" "}
-            <strong>{relatorio.length}</strong>
+            Total de adoções: <strong>{relatorio.length}</strong>
           </p>
 
           <div className="relatorio-table-wrapper">
@@ -96,7 +82,7 @@ export default function RelatorioAdocoes() {
               </tbody>
             </table>
           </div>
-        </section>
+        </>
       )}
     </main>
   );

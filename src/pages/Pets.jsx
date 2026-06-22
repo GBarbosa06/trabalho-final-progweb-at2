@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { usePets } from "../hooks/usePets.js";
 import { PetRow } from "../components/PetRow.jsx";
-import BackButton from "../components/BackButton.jsx";
+import Navbar from "../components/Navbar.jsx";
 
 const EMPTY_FORM = { nome: "", especie: "", raca: "", idade: "" };
 
@@ -82,7 +82,7 @@ export default function Pets() {
 
   return (
     <main className="pets-page">
-      <BackButton />
+      <Navbar />
 
       <div className="page-header">
         <h1>🐶 Pets</h1>
