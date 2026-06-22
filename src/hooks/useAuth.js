@@ -3,6 +3,8 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
   signOut,
 } from "firebase/auth";
 import { auth } from "../firebase/config.jsx";
@@ -15,11 +17,15 @@ const AUTH_ERRORS = {
   "auth/email-already-in-use": "Este e-mail já está em uso.",
   "auth/weak-password": "A senha deve ter pelo menos 6 caracteres.",
   "auth/invalid-credential": "E-mail ou senha inválidos.",
+  "auth/popup-closed-by-user": "Login cancelado. Tente novamente.",
+  "auth/cancelled-popup-request": "Login cancelado. Tente novamente.",
 };
 
 function getAuthErrorMessage(error) {
   return AUTH_ERRORS[error.code] ?? "Ocorreu um erro. Tente novamente.";
 }
+
+const googleProvider = new GoogleAuthProvider();
 
 export function useAuth() {
   const [user, setUser] = useState(null);
@@ -40,6 +46,19 @@ export function useAuth() {
 
     try {
       const credential = await signInWithEmailAndPassword(auth, email, password);
+      return credential.user;
+    } catch (err) {
+      const message = getAuthErrorMessage(err);
+      setError(message);
+      throw new Error(message);
+    }
+  }, []);
+
+  const loginWithGoogle = useCallback(async () => {
+    setError(null);
+
+    try {
+      const credential = await signInWithPopup(auth, googleProvider);
       return credential.user;
     } catch (err) {
       const message = getAuthErrorMessage(err);
@@ -82,6 +101,7 @@ export function useAuth() {
     loading,
     error,
     login,
+    loginWithGoogle,
     register,
     logout,
     clearError,

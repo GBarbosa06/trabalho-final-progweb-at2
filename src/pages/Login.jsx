@@ -4,10 +4,11 @@ import { useAuthContext } from "../contexts/AuthContext.jsx";
 
 export default function Login() {
   const navigate = useNavigate();
-  const { login, error, clearError } = useAuthContext();
+  const { login, loginWithGoogle, error, clearError } = useAuthContext();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [googleSubmitting, setGoogleSubmitting] = useState(false);
 
   async function handleSubmit(event) {
     event.preventDefault();
@@ -24,14 +25,28 @@ export default function Login() {
     }
   }
 
+  async function handleGoogleLogin() {
+    clearError();
+    setGoogleSubmitting(true);
+
+    try {
+      await loginWithGoogle();
+      navigate("/");
+    } catch {
+      // erro tratado no hook
+    } finally {
+      setGoogleSubmitting(false);
+    }
+  }
+
   return (
     <div className="auth-page">
       <form className="auth-form" onSubmit={handleSubmit}>
         <div className="auth-banner">
           <span className="auth-banner-icon">🐾</span>
           <div>
-            <h1>Cafofo dos Peludos</h1>
-            <p>Sistema de gestão do abrigo</p>
+            <h1>PetManager</h1>
+            <p>Cuidando de quem você ama</p>
           </div>
         </div>
 
@@ -47,7 +62,7 @@ export default function Login() {
             autoComplete="email"
             placeholder="seu@email.com"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={(event) => setEmail(event.target.value)}
             required
           />
 
@@ -58,12 +73,31 @@ export default function Login() {
             autoComplete="current-password"
             placeholder="••••••••"
             value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            onChange={(event) => setPassword(event.target.value)}
             required
           />
 
-          <button type="submit" disabled={submitting}>
+          <button type="submit" disabled={submitting || googleSubmitting}>
             {submitting ? "Entrando..." : "Entrar"}
+          </button>
+
+          <div className="auth-separator">
+            <span>ou</span>
+          </div>
+
+          <button
+            type="button"
+            className="auth-google-btn"
+            onClick={handleGoogleLogin}
+            disabled={submitting || googleSubmitting}
+          >
+            <img
+              src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+              alt="Google"
+              width={20}
+              height={20}
+            />
+            {googleSubmitting ? "Aguarde..." : "Entrar com Google"}
           </button>
 
           <p className="auth-footer">
