@@ -1,26 +1,36 @@
 import { Link, useLocation } from "react-router-dom";
 import { useAuthContext } from "../contexts/AuthContext.jsx";
 
-const LINKS = [
+const ADMIN_LINKS = [
   { to: "/pets", label: "Pets" },
   { to: "/tutores", label: "Tutores" },
+  { to: "/pedidos", label: "Pedidos" },
   { to: "/adocoes", label: "Adoções" },
   { to: "/relatorio", label: "Relatório" },
 ];
 
-export default function Navbar() {
+const CLIENTE_LINKS = [
+  { to: "/cliente/pets", label: "Pets" },
+  { to: "/cliente/tutores", label: "Tutores" },
+  { to: "/cliente/pedidos", label: "Meus pedidos" },
+];
+
+export default function Navbar({ variant = "admin" }) {
   const { logout } = useAuthContext();
   const location = useLocation();
 
+  const links = variant === "cliente" ? CLIENTE_LINKS : ADMIN_LINKS;
+  const homePath = variant === "cliente" ? "/cliente" : "/admin";
+
   return (
     <nav className="app-navbar">
-      <Link to="/" className="app-navbar-brand">
+      <Link to={homePath} className="app-navbar-brand">
         <span>🐾</span>
         <strong>Cafofo dos Peludos</strong>
       </Link>
 
       <div className="app-navbar-links">
-        {LINKS.map((link) => (
+        {links.map((link) => (
           <Link
             key={link.to}
             to={link.to}

@@ -42,10 +42,12 @@ export function usePets() {
   const addPet = useCallback(async (petData) => {
     setError(null);
 
+    const data = { ...petData, disponivel: true };
+
     try {
-      const docRef = await addDoc(collection(db, COLLECTION), petData);
+      const docRef = await addDoc(collection(db, COLLECTION), data);
       setPets((prev) =>
-        [...prev, { id: docRef.id, ...petData }].sort((a, b) =>
+        [...prev, { id: docRef.id, ...data }].sort((a, b) =>
           a.nome.localeCompare(b.nome)
         )
       );
@@ -86,6 +88,21 @@ export function usePets() {
     }
   }, []);
 
+  const marcarIndisponivel = useCallback(async (id) => {
+    setError(null);
+
+    try {
+      await updateDoc(doc(db, COLLECTION, id), { disponivel: false });
+      setPets((prev) =>
+        prev.map((p) => (p.id === id ? { ...p, disponivel: false } : p))
+      );
+    } catch (err) {
+      setError("Erro ao atualizar disponibilidade do pet.");
+      console.error(err);
+      throw err;
+    }
+  }, []);
+
   const clearError = useCallback(() => setError(null), []);
 
   return {
@@ -95,6 +112,7 @@ export function usePets() {
     addPet,
     updatePet,
     deletePet,
+    marcarIndisponivel,
     clearError,
   };
 }

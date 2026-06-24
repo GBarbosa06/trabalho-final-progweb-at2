@@ -7,13 +7,14 @@ import {
   deleteDoc,
   doc,
   query,
+  where,
   orderBy,
 } from "firebase/firestore";
 import { db } from "../firebase/config.jsx";
 
 const COLLECTION = "tutores";
 
-export function useTutores() {
+export function useTutores({ criadoPorUid } = {}) {
   const [tutores, setTutores] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -23,9 +24,22 @@ export function useTutores() {
     setError(null);
 
     try {
-      const q = query(collection(db, COLLECTION), orderBy("nome"));
-      const snapshot = await getDocs(q);
-      const data = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+      let snapshot;
+
+      if (criadoPorUid) {
+        const q = query(
+          collection(db, COLLECTION),
+          where("criadoPorUid", "==", criadoPorUid)
+        );
+        snapshot = await getDocs(q);
+      } else {
+        const q = query(collection(db, COLLECTION), orderBy("nome"));
+        snapshot = await getDocs(q);
+      }
+
+      const data = snapshot.docs
+        .map((d) => ({ id: d.id, ...d.data() }))
+        .sort((a, b) => a.nome.localeCompare(b.nome));
       setTutores(data);
     } catch (err) {
       setError("Erro ao carregar tutores. Tente novamente.");
@@ -33,7 +47,7 @@ export function useTutores() {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [criadoPorUid]);
 
   useEffect(() => {
     fetchTutores();

@@ -186,6 +186,16 @@ body {
   font-size: 0.875rem;
 }
 
+.auth-success {
+  margin: 0 0 1rem;
+  padding: 0.8rem 1rem;
+  border-radius: var(--radius-sm);
+  background: var(--green-light);
+  border: 1px solid #a7d4b8;
+  color: var(--green);
+  font-size: 0.875rem;
+}
+
 .auth-footer {
   margin: 1.25rem 0 0;
   text-align: center;
@@ -721,6 +731,32 @@ body {
   border-radius: 20px;
   font-size: 0.78rem;
   font-weight: 700;
+}
+
+.badge-status {
+  display: inline-block;
+  padding: 0.2rem 0.7rem;
+  border-radius: 20px;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.badge-status--pendente {
+  background: #fef3c7;
+  color: #b45309;
+  border: 1px solid #fde68a;
+}
+
+.badge-status--aprovada {
+  background: var(--green-light);
+  color: var(--green);
+  border: 1px solid #a7d4b8;
+}
+
+.badge-status--rejeitada {
+  background: var(--red-light);
+  color: var(--red);
+  border: 1px solid var(--red-border);
 }
 
 /* ── Back button ── */

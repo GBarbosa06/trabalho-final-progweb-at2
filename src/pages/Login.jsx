@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../contexts/AuthContext.jsx";
+import { getHomePathForRole } from "../utils/roles.js";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -16,8 +17,8 @@ export default function Login() {
     setSubmitting(true);
 
     try {
-      await login(email, password);
-      navigate("/");
+      const { role } = await login(email, password);
+      navigate(getHomePathForRole(role));
     } catch {
       // erro tratado no hook
     } finally {
@@ -30,8 +31,8 @@ export default function Login() {
     setGoogleSubmitting(true);
 
     try {
-      await loginWithGoogle();
-      navigate("/");
+      const { role } = await loginWithGoogle();
+      navigate(getHomePathForRole(role));
     } catch {
       // erro tratado no hook
     } finally {

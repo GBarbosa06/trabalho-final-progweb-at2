@@ -7,7 +7,9 @@ import {
   GoogleAuthProvider,
   signOut,
 } from "firebase/auth";
-import { auth } from "../firebase/config.jsx";
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import { auth, db } from "../firebase/config.jsx";
+import { ROLES } from "../utils/roles.js";
 
 const AUTH_ERRORS = {
   "auth/invalid-email": "E-mail inválido.",
@@ -27,15 +29,49 @@ function getAuthErrorMessage(error) {
 
 const googleProvider = new GoogleAuthProvider();
 
+async function ensureUserDocument(user) {
+  const userRef = doc(db, "users", user.uid);
+  const snapshot = await getDoc(userRef);
+
+  if (snapshot.exists()) {
+    return snapshot.data().role;
+  }
+
+  await setDoc(userRef, {
+    email: user.email,
+    role: ROLES.CLIENTE,
+    createdAt: serverTimestamp(),
+  });
+
+  return ROLES.CLIENTE;
+}
+
 export function useAuth() {
   const [user, setUser] = useState(null);
+  const [role, setRole] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       setUser(currentUser);
-      setLoading(false);
+
+      if (!currentUser) {
+        setRole(null);
+        setLoading(false);
+        return;
+      }
+
+      try {
+        const userRole = await ensureUserDocument(currentUser);
+        setRole(userRole);
+      } catch (err) {
+        console.error(err);
+        setError("Erro ao carregar perfil do usuário.");
+        setRole(null);
+      } finally {
+        setLoading(false);
+      }
     });
 
     return unsubscribe;
@@ -46,7 +82,9 @@ export function useAuth() {
 
     try {
       const credential = await signInWithEmailAndPassword(auth, email, password);
-      return credential.user;
+      const userRole = await ensureUserDocument(credential.user);
+      setRole(userRole);
+      return { user: credential.user, role: userRole };
     } catch (err) {
       const message = getAuthErrorMessage(err);
       setError(message);
@@ -59,7 +97,9 @@ export function useAuth() {
 
     try {
       const credential = await signInWithPopup(auth, googleProvider);
-      return credential.user;
+      const userRole = await ensureUserDocument(credential.user);
+      setRole(userRole);
+      return { user: credential.user, role: userRole };
     } catch (err) {
       const message = getAuthErrorMessage(err);
       setError(message);
@@ -72,7 +112,13 @@ export function useAuth() {
 
     try {
       const credential = await createUserWithEmailAndPassword(auth, email, password);
-      return credential.user;
+      await setDoc(doc(db, "users", credential.user.uid), {
+        email,
+        role: ROLES.CLIENTE,
+        createdAt: serverTimestamp(),
+      });
+      setRole(ROLES.CLIENTE);
+      return { user: credential.user, role: ROLES.CLIENTE };
     } catch (err) {
       const message = getAuthErrorMessage(err);
       setError(message);
@@ -85,6 +131,7 @@ export function useAuth() {
 
     try {
       await signOut(auth);
+      setRole(null);
     } catch (err) {
       const message = getAuthErrorMessage(err);
       setError(message);
@@ -98,6 +145,7 @@ export function useAuth() {
 
   return {
     user,
+    role,
     loading,
     error,
     login,

@@ -24,8 +24,7 @@ export default function Home() {
           Gerencie com <span>amor</span>
         </h1>
         <p>
-          Cadastre pets, tutores e registre adoções — tudo em um só lugar,
-          para que cada peludinho encontre um lar.
+          Cadastre pets, tutores e aprove pedidos de adoção — tudo em um só lugar.
         </p>
         <div className="home-welcome-chip">
           👤 <strong>{user?.email}</strong>
@@ -52,6 +51,14 @@ export default function Home() {
             </div>
           </Link>
 
+          <Link to="/pedidos" className="home-nav-card home-nav-card--accent">
+            <div className="nav-card-icon-wrap">📋</div>
+            <div className="nav-card-text">
+              <span className="nav-card-label">Pedidos</span>
+              <span className="nav-card-desc">Aprovar solicitações de adoção</span>
+            </div>
+          </Link>
+
           <Link to="/adocoes" className="home-nav-card">
             <div className="nav-card-icon-wrap">💚</div>
             <div className="nav-card-text">
@@ -60,7 +67,7 @@ export default function Home() {
             </div>
           </Link>
 
-          <Link to="/relatorio" className="home-nav-card home-nav-card--accent">
+          <Link to="/relatorio" className="home-nav-card">
             <div className="nav-card-icon-wrap">📊</div>
             <div className="nav-card-text">
               <span className="nav-card-label">Relatório</span>
